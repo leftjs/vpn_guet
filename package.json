@@ -1,0 +1,20 @@
+{
+  "name": "vpn_guet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "leftjs",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "ping": "^0.2.1",
+    "shelljs": "^0.7.5"
+  },
+  "scripts": {
+    "start": "nodemon ./lib/index.js --watch ./lib --exec babel-node"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0"
+  }
+}
