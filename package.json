@@ -12,7 +12,8 @@
   "scripts": {
     "start": "nodemon ./lib/index.js --watch ./lib --exec babel-node",
     "build": "babel lib -d dist",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "dist": "npm run build && npm run serve"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
