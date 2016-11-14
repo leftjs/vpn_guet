@@ -71,7 +71,7 @@ function writeFileContent(fileName, content) {
  */
 function createInterfaces(newIp) {
   var raw = readFileContent("./lib/raw_interfaces");
-  var newContent = _util2.default.format(raw, _config.INNER_INTERFACE_NAME, _config.INNER_INTERFACE_NAME, newIp, _config.OUTER_INTERFACE_NAME, _config.OUTER_INTERFACE_NAME, _config.SSID, _config.PSK);
+  var newContent = _util2.default.format(raw, _config.INNER_INTERFACE_NAME, _config.INNER_INTERFACE_NAME, _config.INNER_INTERFACE_NAME, newIp, _config.OUTER_INTERFACE_NAME, _config.OUTER_INTERFACE_NAME, _config.SSID, _config.PSK);
   writeFileContent("./lib/interfaces", newContent);
 }
 
@@ -85,6 +85,9 @@ function createPptpd(newIp) {
   writeFileContent("./lib/pptpd.conf", newContent);
 }
 
+/**
+ * 添加路由表
+ */
 function addRouteItems() {
   exec('ip route add 202.193.0.0/16 via ' + _config.LOCAL_GATEWAY + ' dev ' + _config.INNER_INTERFACE_NAME);
   exec('ip route add 10.100.123.0/24 via ' + _config.LOCAL_GATEWAY + ' dev ' + _config.INNER_INTERFACE_NAME);
@@ -101,10 +104,10 @@ function main() {
       if (!isAlive || !newIp) {
         // 如果ping不通3教网关
         console.log('网络重启中.........');
-        console.log('\u65B0\u7684ip\u4E3A: ' + newIp);
         console.log('\u5F53\u524D\u65F6\u95F4: ' + new Date().toLocaleString());
         exec('dhclient ' + _config.INNER_INTERFACE_NAME);
         newIp = getLocalIp(_config.INNER_INTERFACE_NAME);
+        console.log('\u65B0\u7684ip\u4E3A: ' + newIp);
         try {
           createInterfaces(newIp);
           createPptpd(newIp);
@@ -118,6 +121,7 @@ function main() {
         cp('-f', './lib/pptpd.conf', '/etc/pptpd.conf');
         exec('/etc/init.d/pptpd restart');
 
+        addRouteItems();
         console.log('配置完成');
       }
     });
