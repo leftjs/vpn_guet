@@ -11,4 +11,5 @@ wpa-psk "%s"
 auto %s
 iface %s inet dhcp
 
+dns-nameservers %s
 pre-up iptables-restore < /etc/iptables-rules
