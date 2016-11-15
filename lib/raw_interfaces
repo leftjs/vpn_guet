@@ -3,10 +3,7 @@ auto lo
 iface lo inet loopback
 
 auto %s
-iface %s inet static
-pre-up ifconfig %s hw ether b8:27:eb:0b:27:f1
-address %s
-netmask 255.255.254.0
+iface %s inet dhcp
 
 auto %s
 iface %s inet dhcp
