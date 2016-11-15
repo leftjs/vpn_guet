@@ -4,10 +4,11 @@ iface lo inet loopback
 
 auto %s
 iface %s inet dhcp
+wpa-ssid "%s"
+wpa-psk "%s"
+
 
 auto %s
 iface %s inet dhcp
-wpa-ssid "%s"
-wpa-psk "%s"
 
 pre-up iptables-restore < /etc/iptables-rules
